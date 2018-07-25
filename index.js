@@ -6,6 +6,14 @@ const app = express();
 
 const token = process.env.FB_VERIFY_TOKEN
 const access = process.env.FB_ACCESS_TOKEN
+var witToken = Y6MCPTQDZ4LXBW5OSWMPBZKSLQ5UZ7WP;
+
+
+const {Wit, log} = require('node-wit');
+const client = new Wit({
+  accessToken: witToken
+});
+
 
 app.set('port',(process.env.PORT || 4444))
 app.use(bodyParser.urlencoded({extended:false}))
@@ -63,17 +71,31 @@ app.post('/webhook', (req, res) => {
   
   });
 
+  function firstEntity(nlp, name){
+    return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
+  }
+
   function handleMessage(sender_psid, received_message) {
 
     let response;
   
     // Check if the message contains text
-    if (received_message.text) {    
-  
-      // Create the payload for a basic text message
+    if (received_message.text) {
+      
+      const greeting = firstEntity(message.nlp, 'greetings');
+      if (greeting && greeting.confidence > 0.8 ){
+        response = {
+          "text":"Hi There!"
+        }
+      } else {
+         // Create the payload for a basic text message
       response = {
         "text": `You sent the message: "${received_message.text}". Now send me an image!`
       }
+
+      }
+  
+     
     }  
     
     // Sends the response message
