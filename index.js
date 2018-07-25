@@ -88,6 +88,20 @@ app.post('/webhook', (req, res) => {
       },
       "message": response
     }
+  
+    // Send the HTTP request to the Messenger Platform
+    request({
+      "uri": "https://graph.facebook.com/v2.6/me/messages",
+      "qs": { "access_token": access },
+      "method": "POST",
+      "json": request_body
+    }, (err, res, body) => {
+      if (!err) {
+        console.log('message sent!')
+      } else {
+        console.error("Unable to send message:" + err);
+      }
+    }); 
   }
 
 app.listen(app.get('port'),function(){
