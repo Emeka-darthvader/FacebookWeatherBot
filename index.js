@@ -6,13 +6,13 @@ const app = express();
 
 const token = process.env.FB_VERIFY_TOKEN
 const access = process.env.FB_ACCESS_TOKEN
-var witToken = "Y6MCPTQDZ4LXBW5OSWMPBZKSLQ5UZ7WP";
+// var witToken = "Y6MCPTQDZ4LXBW5OSWMPBZKSLQ5UZ7WP";
 
 
-const {Wit, log} = require('node-wit');
-const client = new Wit({
-  accessToken: witToken
-});
+// const {Wit, log} = require('node-wit');
+// const client = new Wit({
+//   accessToken: witToken
+// });
 
 
 app.set('port',(process.env.PORT || 4444))
