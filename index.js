@@ -104,7 +104,7 @@ app.post('/webhook', (req, res) => {
         
         var weatherCity = location.value.value;
       
-        let weatherUrl='http://api.openweathermap.org/data/2.5/weather?q=${weatherCity}&appid=${weatherApiKey}&units=metric';
+        let weatherUrl=`http://api.openweathermap.org/data/2.5/weather?q=${weatherCity}&appid=${weatherApiKey}&units=metric`;
 
         request(weatherUrl,function(err,rsp){
           if(err){
