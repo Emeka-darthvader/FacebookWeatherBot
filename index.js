@@ -88,18 +88,19 @@ app.post('/webhook', (req, res) => {
     // Check if the message contains text
     if (received_message.text) {
       
-      const greeting = firstEntity(received_message.nlp, 'greetings');
+      //const greeting = firstEntity(received_message.nlp, 'greetings');
 
       const location = firstEntity(received_message,'location');
       const weatherCall = secondEntity(received_message,'intent');
 
 
-      if (greeting && greeting.confidence > 0.8 ){
-        response = {
-          "text":"Hi There!"
-        }
-      } 
-      else if(location && weatherCall  && weatherCall.confidence > 0.8) {
+      // if (greeting && greeting.confidence > 0.8 ){
+      //   response = {
+      //     "text":"Hi There!"
+      //   }
+      // } 
+      // else
+       if(location && weatherCall  && weatherCall.confidence > 0.8) {
         
         var weatherCity = location.value.value;
       
