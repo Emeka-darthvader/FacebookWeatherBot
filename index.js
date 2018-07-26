@@ -103,7 +103,9 @@ app.post('/webhook', (req, res) => {
       else  if( location  && location.confidence > 0.8) {
         
         var weatherCity = location.value.value;
+        console.log("===========================");
         console.log(location);
+        console.log("===========================");
       
         let weatherUrl=`http://api.openweathermap.org/data/2.5/weather?q=${weatherCity}&appid=${weatherApiKey}&units=metric`;
 
