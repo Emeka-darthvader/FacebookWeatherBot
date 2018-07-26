@@ -90,13 +90,13 @@ app.post('/webhook', (req, res) => {
       
       const greeting = firstEntity(received_message.nlp, 'greetings');
       const location = firstEntity(received_message,'location');
-      const weatherCall = secondEntity(received_message,'weather_get');
+      const weatherCall = secondEntity(received_message,'intent');
       if (greeting && greeting.confidence > 0.8 ){
         response = {
           "text":"Hi There!"
         }
       } 
-      else if(location && weatherCall  && weatherCall.confidence>0.8) {
+      else if(location && weatherCall  && weatherCall.confidence > 0.8) {
         
         var weatherCity = location.value.value;
       
