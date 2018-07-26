@@ -78,9 +78,9 @@ app.post('/webhook', (req, res) => {
     return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
   }
 
-  function secondEntity(nlp, name){
-    return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][1];
-  }
+  // function secondEntity(nlp, name){
+  //   return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
+  // }
 
   function handleMessage(sender_psid, received_message) {
 
@@ -92,7 +92,7 @@ app.post('/webhook', (req, res) => {
       const greeting = firstEntity(received_message.nlp, 'greetings');
 
       const location = firstEntity(received_message,'location');
-      const weatherCall = secondEntity(received_message,'intent');
+      const weatherCall = firstEntity(received_message,'intent');
 
 
       if (greeting && greeting.confidence > 0.8 ){
