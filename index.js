@@ -91,8 +91,8 @@ app.post('/webhook', (req, res) => {
       
       const greeting = firstEntity(received_message.nlp, 'greetings');
 
-      const location = firstEntity(received_message,'location');
-      const weatherCall = firstEntity(received_message,'intent');
+      const location = firstEntity(received_message.nlp,'location');
+      const weatherCall = firstEntity(received_message.nlp,'intent');
 
 
       if (greeting && greeting.confidence > 0.8 ){
