@@ -14,6 +14,8 @@ const access = process.env.FB_ACCESS_TOKEN
 //   accessToken: witToken
 // });
 
+let weatherApiKey = process.env.OW_API_KEY;
+
 
 app.set('port',(process.env.PORT || 4444))
 app.use(bodyParser.urlencoded({extended:false}))
@@ -75,6 +77,10 @@ app.post('/webhook', (req, res) => {
     return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
   }
 
+  function secondEntity(nlp, name){
+    return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][1];
+  }
+
   function handleMessage(sender_psid, received_message) {
 
     let response;
@@ -83,11 +89,33 @@ app.post('/webhook', (req, res) => {
     if (received_message.text) {
       
       const greeting = firstEntity(received_message.nlp, 'greetings');
+      const location = firstEntity(received_message,'location');
+      const weatherCall = secondEntity(received_message,'weather_get');
       if (greeting && greeting.confidence > 0.8 ){
         response = {
           "text":"Hi There!"
         }
-      } else {
+      } 
+      else if(location && weatherCall  && weatherCall.confidence>0.8) {
+        
+        var weatherCity = location.value.value;
+      
+        let weatherUrl='http://api.openweathermap.org/data/2.5/weather?q=${weatherCity}&appid=${weatherApiKey}&units=metric';
+
+        request(url,function(err,response,body){
+          if(err){
+            console.log('Werror:',error);
+          }
+          else {
+            console.log('body:',body);
+          }
+        });
+        let weather = JSON.parse(body);
+        response = {
+          "text":"The weather in ${weather.name} is ${weather.weather[0].description}/n. The Temperature is ${weather.main.temp} Celsius"
+        }
+      }
+      else {
          // Create the payload for a basic text message
       response = {
         "text": `You sent the message: "${received_message.text}". Now send me an image!`
