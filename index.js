@@ -47,7 +47,7 @@ app.post('/webhook', (req, res) => {
         // Gets the body of the webhook event
         let webhook_event = entry.messaging[0];
         //console.log(webhook_event);
-        console.log(webhook_event.nlp.entities);
+        console.log(webhook_event.message.nlp.entities);
       
       
         // Get the sender PSID
