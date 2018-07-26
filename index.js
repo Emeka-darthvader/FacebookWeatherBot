@@ -106,18 +106,19 @@ app.post('/webhook', (req, res) => {
       
         let weatherUrl='http://api.openweathermap.org/data/2.5/weather?q=${weatherCity}&appid=${weatherApiKey}&units=metric';
 
-        request(weatherUrl,function(err,response,body){
+        request(weatherUrl,function(err,rsp){
           if(err){
-            console.log('Werror:',error);
+            console.log('Werror:', err);
           }
           else {
-            console.log('body:',body);
+            console.log('body:',rsp.body);
+            let weather = JSON.parse(rsp.body);
+        response = {
+          "text": `The weather in ${weather.name} is ${weather.weather[0].description}. \n The Temperature is ${weather.main.temp} Celsius`
+        }
           }
         });
-        let weather = JSON.parse(body);
-        response = {
-          "text":"The weather in ${weather.name} is ${weather.weather[0].description}/n. The Temperature is ${weather.main.temp} Celsius"
-        }
+        
       }
       else {
          // Create the payload for a basic text message
