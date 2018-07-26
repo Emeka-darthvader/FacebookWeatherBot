@@ -106,7 +106,7 @@ app.post('/webhook', (req, res) => {
       
         let weatherUrl='http://api.openweathermap.org/data/2.5/weather?q=${weatherCity}&appid=${weatherApiKey}&units=metric';
 
-        request(url,function(err,response,body){
+        request(weatherUrl,function(err,response,body){
           if(err){
             console.log('Werror:',error);
           }
