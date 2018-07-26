@@ -82,7 +82,7 @@ app.post('/webhook', (req, res) => {
     // Check if the message contains text
     if (received_message.text) {
       
-      const greeting = firstEntity(received_message.nlp, 'intent');
+      const greeting = firstEntity(received_message.nlp, 'greetings');
       if (greeting && greeting.confidence > 0.8 ){
         response = {
           "text":"Hi There!"
