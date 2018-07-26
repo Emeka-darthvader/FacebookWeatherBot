@@ -78,7 +78,7 @@ app.post('/webhook', (req, res) => {
   }
 
   function secondEntity(nlp, name){
-    return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
+    return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][1];
   }
 
   function handleMessage(sender_psid, received_message) {
@@ -99,7 +99,7 @@ app.post('/webhook', (req, res) => {
           "text":"Hi There!"
         }
       } 
-      else  if( weatherCall  && weatherCall.confidence > 0.8) {
+      else  if( location  && location.confidence > 0.8) {
         
         var weatherCity = location.value.value;
       
