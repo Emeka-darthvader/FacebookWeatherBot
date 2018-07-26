@@ -102,7 +102,7 @@ app.post('/webhook', (req, res) => {
       } 
       else  if( location  && location.confidence > 0.8) {
         
-        var weatherCity = location.value.value;
+        var weatherCity = location.value;
         console.log("===========================");
         console.log(location);
         console.log("===========================");
