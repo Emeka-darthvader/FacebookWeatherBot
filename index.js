@@ -89,14 +89,14 @@ app.post('/webhook', (req, res) => {
     if (received_message.text) {
       
       const greeting = firstEntity(received_message.nlp, 'greetings');
-      
+
       const location = firstEntity(received_message,'location');
       const weatherCall = secondEntity(received_message,'intent');
 
-      console.log("Location Boolean: ",location);
-      console.log("Location Confidence: ",location.confidence);
-      console.log("Weather Boolean: ",weatherCall);
-      console.log("Weather Confidence: ",weatherCall.confidence);
+      // console.log("Location Boolean: ",location);
+      // console.log("Location Confidence: ",location.confidence);
+      // console.log("Weather Boolean: ",weatherCall);
+      // console.log("Weather Confidence: ",weatherCall.confidence);
 
       if (greeting && greeting.confidence > 0.8 ){
         response = {
