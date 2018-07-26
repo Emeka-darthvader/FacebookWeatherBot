@@ -89,6 +89,7 @@ app.post('/webhook', (req, res) => {
     if (received_message.text) {
       
       const greeting = firstEntity(received_message.nlp, 'greetings');
+      
       const location = firstEntity(received_message,'location');
       const weatherCall = secondEntity(received_message,'intent');
 
