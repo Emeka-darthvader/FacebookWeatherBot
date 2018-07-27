@@ -93,6 +93,10 @@ function handleMessage(sender_psid, received_message) {
 
     const location = firstEntity(received_message.nlp, 'location');
     const weatherCall = firstEntity(received_message.nlp, 'intent');
+    const pidgenWeather= firstEntity(received_message.nlp,'pidgen_intent');
+    const pidgenGreetings= firstEntity(received_message.nlp,'pidgen_greetings');
+    const igboGreetings= firstEntity(received_message.nlp,'igbo_greetings');
+
 
 
     if (greeting && greeting.confidence > 0.8) {
@@ -102,6 +106,7 @@ function handleMessage(sender_psid, received_message) {
        // Sends the response message
     callSendAPI(sender_psid, response);  
     }
+
     else if (location && location.confidence > 0.8) {
 
       var weatherCity = location.value;
@@ -121,6 +126,57 @@ function handleMessage(sender_psid, received_message) {
           let weather = JSON.parse(rsp.body);
           response = {
             "text": `The weather in ${weather.name} is ${weather.weather[0].description}. \n The Temperature is ${weather.main.temp} Celsius`
+          }
+        }
+
+        // Sends the response message
+        callSendAPI(sender_psid, response);
+      });
+
+
+
+
+
+    }
+
+    else if ( pidgenGreetings && pidgenGreetings.confidence > 0.8) {
+      
+        response = {
+          "text": ` My person how things dey go?`
+        }
+
+        // Sends the response message
+        callSendAPI(sender_psid, response);
+
+    }
+
+    else if ( igboGreetings && igboGreetings.confidence > 0.8) {
+      
+      response = {
+        "text": `Nwannem Kedu!`
+      }
+
+      // Sends the response message
+      callSendAPI(sender_psid, response);
+
+  }
+
+    else if (pidgenWeather && location && pidgenWeather.confidence > 0.8) {
+
+      var weatherCity = location.value;
+
+      let weatherUrl = `http://api.openweathermap.org/data/2.5/weather?q=${weatherCity}&appid=${weatherApiKey}&units=metric`;
+
+      request(weatherUrl, function (err, rsp) {
+        if (err) {
+          response = err;
+          console.log('Werror:', err);
+        }
+        else {
+          console.log('body:', rsp.body);
+          let weather = JSON.parse(rsp.body);
+          response = {
+            "text": `The weather for  ${weather.name} dey  ${weather.weather[0].description}. \n The Temperature dey ${weather.main.temp} Celsius`
           }
         }
 
