@@ -96,12 +96,21 @@ function handleMessage(sender_psid, received_message) {
     const pidgenWeather= firstEntity(received_message.nlp,'pidgen_intent');
     const pidgenGreetings= firstEntity(received_message.nlp,'pidgen_greetings');
     const igboGreetings= firstEntity(received_message.nlp,'igbo_greetings');
+    const codeVilleGreet = firstEntity(received_message.nlp,'codeville_greet');
 
 
 
     if (greeting && greeting.confidence > 0.8) {
       response = {
         "text": "Hi There!"
+      }
+       // Sends the response message
+    callSendAPI(sender_psid, response);  
+    }
+
+    else if (codeVilleGreet && codeVilleGreet.confidence > 0.8) {
+      response = {
+        "text": "Why Hello there Children!!!"
       }
        // Sends the response message
     callSendAPI(sender_psid, response);  
