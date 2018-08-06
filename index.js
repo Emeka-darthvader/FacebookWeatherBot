@@ -133,9 +133,28 @@ function handleMessage(sender_psid, received_message) {
         else {
           console.log('body:', rsp.body);
           let weather = JSON.parse(rsp.body);
-          response = {
-            "text": `The weather in ${weather.name} is ${weather.weather[0].description}. \n The Temperature is ${weather.main.temp} Celsius`
+          if (weather.cod == 200)
+          {
+            response = {
+              "text": `The weather in ${weather.name} is ${weather.weather[0].description}. \n The Temperature is ${weather.main.temp} Celsius`
+            }
           }
+
+          else if (weather.cod == 404){
+            if(weather.message==="city not found"){
+              response = {
+                "text": `Sorry. This City is not found`
+              }
+              
+            }
+            else {
+              response = {
+                "text": `Else. Hmmmm. Trying to be smart I See?`
+              }
+            }
+            
+          }
+          
         }
 
         // Sends the response message
@@ -185,7 +204,7 @@ function handleMessage(sender_psid, received_message) {
           console.log('body:', rsp.body);
           let weather = JSON.parse(rsp.body);
           response = {
-            "text": `The weather for  ${weather.name} dey  ${weather.weather[0].description}. \n The Temperature dey ${weather.main.temp} Celsius`
+            "text": `The weather for  ${weather.name} na  ${weather.weather[0].description}. \n The Temperature dey ${weather.main.temp} Celsius`
           }
         }
 
