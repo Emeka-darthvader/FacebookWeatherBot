@@ -97,6 +97,9 @@ function handleMessage(sender_psid, received_message) {
     const pidgenGreetings= firstEntity(received_message.nlp,'pidgen_greetings');
     const igboGreetings= firstEntity(received_message.nlp,'igbo_greetings');
     const codeVilleGreet = firstEntity(received_message.nlp,'codeville_greet');
+    const selfKnow = firstEntity(received_message.nlp,'selfknow_intent');
+    const witThanks = firstEntity(received_message.nlp,'thanks');
+    const witBye = firstEntity(received_message.nlp,'bye');
 
 
 
@@ -115,6 +118,29 @@ function handleMessage(sender_psid, received_message) {
        // Sends the response message
     callSendAPI(sender_psid, response);  
     }
+
+    else if (selfKnow && selfKnow.confidence > 0.8) {
+      response = {
+        "text": "My Name is Mr Harma Tan. Your personal weather forecaster!!!"
+      }
+       // Sends the response message
+    callSendAPI(sender_psid, response);  
+    }
+    else if (witThanks && witThanks.confidence > 0.8) {
+      response = {
+        "text": `You're Welcome`
+      }
+       // Sends the response message
+    callSendAPI(sender_psid, response);  
+    }
+    else if (witBye && witBye.confidence > 0.8) {
+      response = {
+        "text": `Talk soon!!!`
+      }
+       // Sends the response message
+    callSendAPI(sender_psid, response);  
+    }
+
 
     else if (weatherCall && location && weatherCall.confidence > 0.8) {
 
@@ -143,7 +169,7 @@ function handleMessage(sender_psid, received_message) {
           else if (weather.cod == 404){
             if(weather.message==="city not found"){
               response = {
-                "text": `Sorry. This City is not found`
+                "text": `I don't think this is a city`
               }
               
             }
@@ -170,7 +196,7 @@ function handleMessage(sender_psid, received_message) {
     else if ( pidgenGreetings && pidgenGreetings.confidence > 0.8) {
       
         response = {
-          "text": ` My person how things dey go?`
+          "text": ` My personal person!!!`
         }
 
         // Sends the response message
@@ -203,8 +229,26 @@ function handleMessage(sender_psid, received_message) {
         else {
           console.log('body:', rsp.body);
           let weather = JSON.parse(rsp.body);
-          response = {
-            "text": `The weather for  ${weather.name} na  ${weather.weather[0].description}. \n The Temperature dey ${weather.main.temp} Celsius`
+          if (weather.cod == 200)
+          {
+            response = {
+              "text": `The weather for ${weather.name} na ${weather.weather[0].description}. \n The Temperature dey ${weather.main.temp} Celsius`
+            }
+          }
+
+          else if (weather.cod == 404){
+            if(weather.message==="city not found"){
+              response = {
+                "text": `This one na city shoo?`
+              }
+              
+            }
+            else {
+              response = {
+                "text": `Else. Hmmmm. Trying to be smart I See?`
+              }
+            }
+            
           }
         }
 
