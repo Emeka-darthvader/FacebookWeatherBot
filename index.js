@@ -116,7 +116,7 @@ function handleMessage(sender_psid, received_message) {
     callSendAPI(sender_psid, response);  
     }
 
-    else if (location && location.confidence > 0.8) {
+    else if (weatherCall && location && weatherCall.confidence > 0.8) {
 
       var weatherCity = location.value;
       console.log("===========================");
