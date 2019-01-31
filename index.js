@@ -6,7 +6,7 @@ const app = express();
 
 const token = process.env.FB_VERIFY_TOKEN
 const access = process.env.FB_ACCESS_TOKEN
-// var witToken = "Y6MCPTQDZ4LXBW5OSWMPBZKSLQ5UZ7WP";
+// var witToken = "EnteryourToken";
 
 
 // const {Wit, log} = require('node-wit');
